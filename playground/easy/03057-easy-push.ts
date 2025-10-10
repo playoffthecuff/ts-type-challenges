@@ -18,7 +18,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Push<T, U> = any
+type Push<T extends any[], U> = [...T, U];
+
+type Test = Push<[1], boolean>
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
