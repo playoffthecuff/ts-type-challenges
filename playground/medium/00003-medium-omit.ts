@@ -30,7 +30,10 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyOmit<T, K> = any
+type MyExclude<T, K> = T extends K ? never : T;
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
+
+type MyOmit<T, K extends keyof T> = MyPick<T, MyExclude<keyof T, K>>;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
