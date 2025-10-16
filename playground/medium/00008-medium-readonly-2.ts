@@ -34,7 +34,19 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyReadonly2<T, K> = any
+type MyReadonly2<T, K extends keyof T = keyof T> = {
+  readonly [P in keyof T as P extends K ? P : never]: T[P]
+} & {
+  [P in keyof T as P extends K ? never : P]: T[P]
+}
+
+type MyExclude<T, K> = T extends K ? never : T;
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
+type MyReadonly<T> = { readonly [P in keyof T]: T[P] };
+
+type MyOmit<T, K extends keyof T> = MyPick<T, MyExclude<keyof T, K>>;
+
+type MyReadonly22<T, K extends keyof T = keyof T> = MyReadonly<MyPick<T, K>> & MyOmit<T, K>
 
 /* _____________ Test Cases _____________ */
 import type { Alike, Expect } from '@type-challenges/utils'
