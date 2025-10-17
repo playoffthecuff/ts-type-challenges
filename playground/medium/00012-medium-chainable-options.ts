@@ -39,9 +39,13 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Chainable = {
-  option(key: string, value: any): any
-  get(): any
+type MyExclude<T, K> = T extends K ? never : T;
+type MyPick<T, K extends keyof T> = { [P in K]: T[P] };
+type MyOmit<T, K> = MyPick<T, MyExclude<keyof T, K>>;
+
+type Chainable<T = {}> = {
+  option<K extends string, V>(key: K extends keyof T ? never : K, value: V): Chainable<MyOmit<T, K> & {[P in K]: V}>
+  get(): T
 }
 
 /* _____________ Test Cases _____________ */
