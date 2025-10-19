@@ -23,7 +23,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-declare function PromiseAll(values: any): any
+type MyAwaited<T> = T extends { then: (onfulfilled: (r: infer R) => any) => any} ? MyAwaited<R> : T;
+
+declare function PromiseAll<T extends any[]>(values: [...T]): Promise< { [P in keyof T]: MyAwaited<T[P]> } >
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
