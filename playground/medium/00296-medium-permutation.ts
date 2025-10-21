@@ -16,7 +16,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Permutation<T> = any
+type MyExclude<T, K> = T extends K ? never : T;
+type Permutation<T, K = T> = [T] extends [never] ? []
+  : K extends K ? [K, ...Permutation<MyExclude<T, K>>] : never;
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
