@@ -18,7 +18,7 @@
 
 /* _____________ Your Code Here _____________ */
 
-type Flatten = any
+type Flatten<T extends any[]> = T extends [infer First, ...infer Rest] ? [...(First extends any[] ? Flatten<First> : [First]), ...Flatten<Rest>] : [];
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
