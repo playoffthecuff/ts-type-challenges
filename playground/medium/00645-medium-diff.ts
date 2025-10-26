@@ -12,8 +12,9 @@
 
 /* _____________ Your Code Here _____________ */
 
-type MyOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
-type Diff<O, O1> = MyOmit<O & O1, keyof (O | O1)>;
+// type MyOmit<T, K extends keyof T> = { [P in keyof T as P extends K ? never : P]: T[P] };
+// type Diff<O, O1> = MyOmit<O & O1, keyof (O | O1)>;
+type Diff<O1, O2> = { [P in keyof (O1 & O2) as P extends keyof(O1 | O2) ? never : P]: (O1 & O2)[P] }
 
 /* _____________ Test Cases _____________ */
 import type { Equal, Expect } from '@type-challenges/utils'
